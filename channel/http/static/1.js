@@ -21,7 +21,7 @@ function ConvState(wrapper, form, params) {
         $(this.wrapper).find('#messages').stop().animate({ scrollTop: $(this.wrapper).find('#messages')[0].scrollHeight }, 600);
     }.bind(this);
 };
-ConvState.prototype.printAnswer = function (uuid, answer = 'I am ChatGPT, which is the LLM trained by OpenAI. We can talk in any language. 我是ChatGPT, 一个由OpenAI训练的大型语言模型, 我可以使用多种语言与人交流. ') {
+ConvState.prototype.printAnswer = function (uuid, answer = 'Hi, I am ChatGPT, which is the LLM trained by OpenAI. We can talk in any language.') {
     setTimeout(function () {
         var messageObj = $(this.wrapper).find(`#${uuid}`);
         answer = marked.parse(answer);
