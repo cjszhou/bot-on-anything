@@ -110,7 +110,7 @@ def login():
     response.headers.set('location', './login?err=登录失败')
     return response
 
-@http_app.route('/process_model', methods=['POST'])
+@http_app.route('/bot1/process_model', methods=['POST'])
 def process_model():
     if request.method == 'POST':
         global gptmodel
