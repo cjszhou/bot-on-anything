@@ -120,7 +120,7 @@ def process_model():
 
 class HttpChannel(Channel):
     def startup(self):
-        http_app.run(host='0.0.0.0', port=channel_conf(const.HTTP).get('port'), debug=True)
+        http_app.run(host='0.0.0.0', port=channel_conf(const.HTTP).get('port'), debug=False)
 
     def handle(self, data):
         context = dict()
