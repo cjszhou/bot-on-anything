@@ -21,7 +21,7 @@ class ChatGPTModel(Model):
             openai.proxy = proxy
         log.info("[CHATGPT] api_base={} proxy={}".format(
             api_base, proxy))
-    def reply(self, query, context=None):
+    def reply(self, query, context=None, gptmodel='gpt-3.5-turbo'):
         # acquire reply content
         if not context or not context.get('type') or context.get('type') == 'TEXT':
             log.info("[CHATGPT] query={}".format(query))
@@ -38,17 +38,19 @@ class ChatGPTModel(Model):
             #     # reply in stream
             #     return self.reply_text_stream(query, new_query, from_user_id)
 
-            reply_content = self.reply_text(new_query, from_user_id, 0)
+            reply_content = self.reply_text(new_query, from_user_id, 0, gptmodel)
             #log.debug("[CHATGPT] new_query={}, user={}, reply_cont={}".format(new_query, from_user_id, reply_content))
             return reply_content
 
         elif context.get('type', None) == 'IMAGE_CREATE':
             return self.create_img(query, 0)
 
-    def reply_text(self, query, user_id, retry_count=0):
+    def reply_text(self, query, user_id, retry_count=0, gptmodel='gpt-3.5-turbo'):
         try:
+            # print('=====reply_text gptmodel=%s', gptmodel)
             response = openai.ChatCompletion.create(
-                model= model_conf(const.OPEN_AI).get("model") or "gpt-3.5-turbo",  # 对话模型的名称
+                #global gptmodel
+                model= gptmodel or model_conf(const.OPEN_AI).get("model") or "gpt-3.5-turbo",  # 对话模型的名称
                 messages=query,
                 temperature=model_conf(const.OPEN_AI).get("temperature", 0.75),  # 熵值，在[0,1]之间，越大表示选取的候选词越随机，回复越具有不确定性，建议和top_p参数二选一使用，创意性任务越大越好，精确性任务越小越好
                 #max_tokens=4096,  # 回复最大的字符数，为输入和输出的总数
@@ -102,6 +104,7 @@ class ChatGPTModel(Model):
                 presence_penalty=model_conf(const.OPEN_AI).get("presence_penalty", 1.0),  # [-2,2]之间，该值越大则越不受输入限制，将鼓励模型生成输入中不存在的新词，更倾向于产生不同的内容
                 stream=True
             )
+            # print('===relpy_text_stream')
             full_response = ""
             for chunk in res:
                 log.debug(chunk)

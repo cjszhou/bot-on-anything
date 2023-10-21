@@ -119,7 +119,7 @@ ConvState.prototype.sendMessage = function (msg) {
         $(this).addClass('conv-form-wrapper');
 
         var parameters = $.extend(true, {}, {
-            placeHolder: 'Type Here',
+            placeHolder: 'Type Here and Press Enter',
             typeInputUi: 'textarea',
             formIdName: 'convForm',
             inputIdName: 'userInput',
@@ -206,3 +206,33 @@ ConvState.prototype.sendMessage = function (msg) {
         return state;
     }
 })(jQuery);
+
+// $(document).ready(function() {
+//     $('#modelDropdown').select2({
+//       placeholder: 'Select a model'
+//     });
+  
+//     // 当选择项发生变化时执行的回调函数
+//     $('#modelDropdown').on('change', function(e) {
+//       e.preventDefault(); // 阻止表单的默认提交行为
+  
+//       var selectedModel = $(this).val();
+  
+//       $.ajax({
+//         url: '/process_model',
+//         type: 'POST',
+//         data: {model: selectedModel},
+//         success: function(response) {
+//           console.log('Received response:', response);
+//           // 在页面上显示选项值
+//           $('#selectedModelDiv').text(response);
+  
+//           // 刷新页面
+//           location.reload();
+//         },
+//         error: function(error) {
+//           console.log('Error:', error);
+//         }
+//       });
+//     });
+//   });

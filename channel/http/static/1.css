@@ -266,13 +266,13 @@ div.conv-form-wrapper div#messages div.message {
 
 div.conv-form-wrapper div#messages div.message.to {
     float: left;
-    background: rgb(4, 222, 171);
+    background: rgb(132, 179, 226);
     border-top-left-radius: 0;
 }
 
 div.conv-form-wrapper div#messages div.message.from {
-    background: dodgerblue;
-    color: #fff;
+    background: rgb(220, 220, 220);
+    color: black;
     border-top-right-radius: 0;
 }
 

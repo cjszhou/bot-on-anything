@@ -27,8 +27,8 @@ class Channel(object):
         """
         raise NotImplementedError
 
-    def build_reply_content(self, query, context=None):
-        return Bridge().fetch_reply_content(query, context)
+    def build_reply_content(self, query, context=None, gptmodel='gpt-3.5-turbo'):
+        return Bridge().fetch_reply_content(query, context, gptmodel)
 
     async def build_reply_stream(self, query, context=None):
         async for final,response in Bridge().fetch_reply_stream(query, context):

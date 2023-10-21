@@ -23,6 +23,7 @@ http_app.config['TEMPLATES_AUTO_RELOAD'] = True
 # 设置静态文件缓存过期时间
 http_app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
 
+gptmodel = None
 
 async def return_stream(data):
     async for final, response in HttpChannel().handle_stream(data=data):
@@ -109,10 +110,17 @@ def login():
     response.headers.set('location', './login?err=登录失败')
     return response
 
+@http_app.route('/process_model', methods=['POST'])
+def process_model():
+    if request.method == 'POST':
+        global gptmodel
+        gptmodel = request.form['model']
+    return render_template('index.html', selectedmodel=gptmodel)
+
 
 class HttpChannel(Channel):
     def startup(self):
-        http_app.run(host='0.0.0.0', port=channel_conf(const.HTTP).get('port'))
+        http_app.run(host='0.0.0.0', port=channel_conf(const.HTTP).get('port'), debug=True)
 
     def handle(self, data):
         context = dict()
@@ -123,7 +131,7 @@ class HttpChannel(Channel):
             'channel': self, 'context': query,  "args": context}))
         reply = e_context['reply']
         if not e_context.is_pass():
-            reply = super().build_reply_content(e_context["context"], e_context["args"])
+            reply = super().build_reply_content(e_context["context"], e_context["args"], gptmodel)
             e_context = PluginManager().emit_event(EventContext(Event.ON_DECORATE_REPLY, {
                 'channel': self, 'context': context, 'reply': reply, "args": context}))
             reply = e_context['reply']

@@ -8,14 +8,14 @@ class Bridge(object):
     def __init__(self):
         pass
 
-    def fetch_reply_content(self, query, context):
+    def fetch_reply_content(self, query, context, gptmodel):
         econtext = PluginManager().emit_event(EventContext(
             Event.ON_BRIDGE_HANDLE_CONTEXT, {'context': query, 'args': context}))
         type = econtext['args'].get('model') or config.conf().get("model").get("type")
         query = econtext.econtext.get("context", None)
         reply = econtext.econtext.get("reply", "无回复")
         if not econtext.is_pass() and query:
-            return model_factory.create_bot(type).reply(query, context)
+            return model_factory.create_bot(type).reply(query, context, gptmodel)
         else:
             return reply
 
