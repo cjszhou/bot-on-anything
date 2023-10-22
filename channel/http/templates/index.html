@@ -13,12 +13,21 @@
             font-family: 'Microsoft YaHei';
         }
     </style>
-    {% if selectedmodel %}
+    <!-- {% if selectedmodel %}
     <p style="font-family:arial;color:rgb(87, 85, 90);font-size:14px;">Current GPT Model: <a style="font-family:arial;color:rgba(9, 31, 225, 0.851);font-size:15px;">{{ selectedmodel }}</a></p>
-    {% endif %}
+    {% endif %} -->
+    <a href="http://52.185.188.130/">
+        <img border="0" src="{{ url_for('static', filename='cjs.ico') }}" alt="Home" width="50" height="50"></a>
+    <a href="http://52.185.188.130/" style="font-family:arial;color:rgba(83, 84, 90, 0.851);font-size:17px;">Home</a>
+    <p>
+    <p>
+    <a href="/"> Refresh Bot1</a>
 </head>
 
 <body class="">
+    {% if selectedmodel %}
+    <p style="font-family:arial;color:rgb(87, 85, 90);font-size:14px;">Current GPT Model: <a style="font-family:arial;color:rgba(9, 31, 225, 0.851);font-size:15px;">{{ selectedmodel }}</a></p>
+    {% endif %}
     <form action="/process_model" method="POST">
         <select id="modelDropdown" name="model" placeholder="Select a model">
             <option value="gpt-3.5-turbo" {% if selectedmodel == 'gpt-3.5-turbo' %}selected{% endif %}>gpt-3.5-turbo</option>
@@ -72,7 +81,7 @@
         </div>
         <div class="drawer">
             <div class="drawer-header">
-                <h2>Settings 设置</h2>
+                <h2>Settings</h2>
                 <button id="close-drawer">X</button>
             </div>
             <div class="drawer-content">
@@ -83,8 +92,8 @@
                     <label for="italic">Italic</label>
                 </div>
                 <div>
-                    <label for="backgroundColor">Background Color 背景颜色:</label>
-                    <input type="color" id="backgroundColor" name="backgroundColor" value="#ffffff">
+                    <label for="backgroundColor">Background Color:</label>
+                    <input type="color" id="backgroundColor" name="backgroundColor" value="#fefefe">
                 </div>
                 <div>
                     <!--
